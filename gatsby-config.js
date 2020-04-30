@@ -1,12 +1,13 @@
 module.exports = {
   siteMetadata: {
     // edit below
-    title: `Gatsby Starter Personal Blog`,
-    author: `Kyle Matthews`,
+    title: `Memo Rebolledo`,
+    author: `Guillermo Ortiz Rebolledo`,
     description: `A starter personal blog with styled components, dark mode, and Netlify CMS.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `https://memorebo.netlify.app`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `memorebolledo`,
+      instagram: `memorebo`
     },
   },
   plugins: [
@@ -70,14 +71,14 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Memo Rebolledo's Blog`,
+        short_name: `memo's blog`,
         start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
+        background_color: `#000`,
+        theme_color: `#fff`,
         display: `minimal-ui`,
         // edit below
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `content/assets/profile-pic-round.png`,
       },
     },
     {
