@@ -3,7 +3,7 @@ module.exports = {
     // edit below
     title: `Memo Rebolledo`,
     author: `Guillermo Ortiz Rebolledo`,
-    description: `A starter personal blog with styled components, dark mode, and Netlify CMS.`,
+    description: `Welcome to my personal blog. I talk about frontend development to try to learn by writting and hopefully help you learn a thing or two as well.`,
     siteUrl: `https://memorebo.netlify.app`,
     social: {
       twitter: `memorebolledo`,

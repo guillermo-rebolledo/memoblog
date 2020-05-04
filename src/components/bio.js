@@ -18,6 +18,7 @@ function Bio() {
       query={bioQuery}
       render={data => {
         const { author, social } = data.site.siteMetadata
+        console.log(social);
         return (
           <Container>
             <Image
@@ -34,7 +35,7 @@ function Bio() {
               }}
             />
             <p>
-              Written by <strong>{author}</strong> who lives and works in Guadalajara, Mexico building useful things.
+              Written by <strong>{author}</strong> who lives and works in Guadalajara, Mexico <span role="img" aria-label="flag emoji">🇲🇽</span> turning coffee into code.
               {` `}
               <a href={`https://twitter.com/${social.twitter}`} target="_blank" rel="noopener noreferrer">
                 twitter
@@ -65,6 +66,7 @@ const bioQuery = graphql`
         author
         social {
           twitter
+          instagram
         }
       }
     }
