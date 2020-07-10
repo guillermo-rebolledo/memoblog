@@ -22,7 +22,7 @@ class IndexPage extends React.Component {
         </h1>
         <p>I'm a software engineer from Mexico <span role="img" aria-label="flag emoji">🇲🇽</span> passionate about React, javascript, and frontend development.</p>
 
-        <p>I also love videogames and play the guitar in my free time.</p>
+        <p>I also love videogames and play guitar in my free time. <span role="img" aria-label="guitar emoji">🎸🎮</span></p>
 
         <p>Welcome to my blog!</p>
 
