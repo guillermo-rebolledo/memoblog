@@ -4,7 +4,7 @@ date: 2020-10-21T02:19:51.379Z
 title: Delete a Node in a Linked List
 description: Algorithm to remove a node in a Linked List.
 ---
-This is the second entry to the series of algorithms and coding challenges in my blog. ([Here's the first one](https://www.memorebo.dev/blog/reverse-a-singly-linked-list/) where I explain the purpose of these posts). This time we are going to learn how to **delete a node in a linked list**.
+This is the second entry to the series of algorithms and coding challenges in my blog. ([Here's the first one](https://www.memorebo.dev/blog/reverse-a-singly-linked-list/)) where I explain the purpose of these posts). This time we are going to learn how to **delete a node in a linked list**.
 
 \* The code and examples I’m gonna be posting are written in Javascript.
 
