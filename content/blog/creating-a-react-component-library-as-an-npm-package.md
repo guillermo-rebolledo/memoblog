@@ -32,6 +32,42 @@ Rollup is a module bundler for JavaScript which compiles small pieces of code in
 
 The presence of a tsconfig.json file in a directory indicates that the directory is the root of a TypeScript project. The tsconfig.json file specifies the root files and the compiler options required to compile the project.
 
+In our case, the tsconfig.json file looks something like this:
+
+```
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react",
+    "declaration": true,
+    "declarationDir": "dist"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": ["node_modules", "dist", "rollup.config.js", ...otherDirs],
+}
+```
+
+This file can be different depending on your setup and you or your teams preference when using typescript. One of the main keys here is that we use `"declaration": true` which generates definition files for our packages.
+
 #### package.json
 
 Aside from all the stuff we know about the purpose of this file, we will specify some extra keys and values that will indicate:
@@ -83,7 +119,10 @@ export default {
 
 #### Updating the package.json file
 
-* Add `main` key-value: In our case we are using typescript so we use `dist/index.tsx`
+* Add `main` key-value: In our case we are using typescript so we use:
+  ```
+   "dist/index.js"
+  ```
 * Update the `scripts`: 
   ```
   "build-pkg": "rollup -c",
@@ -94,6 +133,98 @@ export default {
    "files": ["dist"]
   ```
 
+Our package.json is looking like this:
+
+```
+{
+  "name": "@<OWNER>/<NAME_OF_PACKAGE>",
+  "version": "0.1.55",
+  "description": "Component library made with React",
+  "repository": {
+    "url": "git://github.com/<OWNER>/<NAME_OF_PACKAGE>.git"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "typescript",
+    "npm",
+    "storybook"
+  ],
+  "scripts": {
+    ...
+    "build-pkg": "rollup -c",
+    "start-pkg": "rollup -c -w"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "devDependencies": {    ...
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.1.1",
+    "rollup": "^2.38.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.29.0",
+  }
+}
+```
+
 #### Testing the package
 
 I won't go into detail on this topic, but you can test the package locally using `npm link` or `yarn link`. You can read more [here](https://docs.npmjs.com/cli/v6/commands/npm-link).
+
+#### Publishing the package
+
+You can find more information about publishing your npm package to the Github registry [here](https://docs.github.com/en/packages/guides/configuring-npm-for-use-with-github-packages). I'm gonna give a brief overview of the steps below:
+
+First, since the repo where our package lives is inside our company's Github organization, there is a couple of extra steps that we needed to make. 
+
+* [Create a personal access token in Github](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). Make sure you give it the `read:packages` and `write:packages` permissions only.
+* This step will let us authenticate to Github Packages with npm. Once we have the token copied to the clipboard, edit the global npm configuration file. You can open it with your favorite text editor, in my case, I picked vscode:  
+
+
+```
+code ~/.npmrc
+```
+
+* Copy the next line and replace _**TOKEN**_ with the personal access token that you just generated the both `//` included.
+
+
+```
+//npm.pkg.github.com/:_authToken=TOKEN
+```
+
+* Normally, you would have to bump the version in your `package.json` file every release. After that, if everything is good up to this point, you should be able to run `npm publish` and see the magic happen. ✨
+* In the project where you plan to install and use you package, you will have to create a local `.npmrc` if you haven't already and add the registry for the scoped package we are publishing (All Github Packages are scoped by default). Remember to replace OWNER with the organization or your github username depending on where your repo is located. This next line indicates npm/yarn where to find your package (since it is not in the public npm registry).:
+
+
+```
+@OWNER:registry=https://npm.pkg.github.com
+```
+
+* After specifying the registry in your npm config file, you can go ahead and do an install.
+
+
+```
+yarn add @<OWNER>/<NAME_OF_PACKAGE>
+```
+
+* If everything is right, you should see your package added to the dependencies in your project.
+
+## Conclusion
+
+So now we have our very own npm package published in Github Packages. Now we can use our component library across all of our projects with a consistent look and feel. It was a tricky task to complete but at the end, it is nice to see a working and installable npm package made by our team. Especially being my first time doing publishing one.
+
+The next steps for me would be to automate the releases of the package via Github Actions for example.
+
+Useful links:
+
+* [Publishing a React Package to npm - LogRocket](https://blog.logrocket.com/the-complete-guide-to-publishing-a-react-package-to-npm/)
+* [Configuring bpm for use with Github Packages](https://docs.github.com/en/packages/guides/configuring-npm-for-use-with-github-packages)
+* [About Github Packages](https://docs.github.com/en/packages/learn-github-packages/about-github-packages)
+* [Creating a Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
