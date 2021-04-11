@@ -7,10 +7,13 @@
 
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
-import Image from "gatsby-image"
 import styled from "styled-components"
+import { bioQuery } from "../components/bio"
 
 import { rhythm } from "../utils/typography"
+
+// import resume from '../../content/assets/'
+import resume from "../../content/assets/GuillermoO_Resume_Private.pdf"
 
 function Bio() {
   return (
@@ -20,32 +23,15 @@ function Bio() {
         const { author, social } = data.site.siteMetadata
         return (
           <Container>
-            <Image
-              fixed={data.avatar.childImageSharp.fixed}
-              alt={author}
-              style={{
-                marginRight: rhythm(1 / 2),
-                marginBottom: 0,
-                minWidth: 50,
-                borderRadius: `100%`,
-              }}
-              imgStyle={{
-                borderRadius: `50%`,
-              }}
-            />
             <p>
-              Written by <strong>{author}</strong> who lives and works in
-              Guadalajara, Mexico{" "}
-              <span role="img" aria-label="flag emoji">
-                🇲🇽
-              </span>{" "}
-              turning coffee into code.
-              {` `}
               <a
                 href={`https://twitter.com/${social.twitter}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <span role="img" aria-label="bird emoji">
+                  🐦
+                </span>{" "}
                 twitter
               </a>
               {` `}
@@ -54,7 +40,16 @@ function Bio() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <span role="img" aria-label="camera emoji">
+                  📷
+                </span>{" "}
                 instagram
+              </a>
+              <a href={resume} rel="noopener noreferrer" target="_blank">
+                <span role="img" aria-label="file emoji">
+                  📁
+                </span>{" "}
+                resume
               </a>
             </p>
           </Container>
@@ -63,27 +58,6 @@ function Bio() {
     />
   )
 }
-
-export const bioQuery = graphql`
-  query BioQuery {
-    avatar: file(absolutePath: { regex: "/profile_pic.png/" }) {
-      childImageSharp {
-        fixed(width: 50, height: 50) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    site {
-      siteMetadata {
-        author
-        social {
-          twitter
-          instagram
-        }
-      }
-    }
-  }
-`
 
 const Container = styled.div`
   display: flex;
